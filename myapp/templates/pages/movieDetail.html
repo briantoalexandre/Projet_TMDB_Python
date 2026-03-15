@@ -1,0 +1,40 @@
+{% include 'pages/header.html' %}
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-12 row-cols-sm-12 row-cols-md-12 g-5">
+            <div class="d-flex align-items-stretchl mx-auto">
+                <div class="card shadow-sm my-auto mx-1">
+                    <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" >
+                </div>
+                    <div>
+                        <h1>{{movie.title}}</h1>
+                        <p>{{movie.overview}}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-12 row-cols-sm-12 row-cols-md-12 g-5">
+            <iframe width="672" height="378" src="https://www.youtube.com/embed/{{ key }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-12 g-1">
+          <div class="card shadow-sm mx-auto " onclick="">
+            <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" width="200" height="300" >
+            <p>name : laea</p>
+          </div>
+
+          <!--
+          <div class="card shadow-sm my-auto mx-1">
+                    <img src="https://image.tmdb.org/t/p/w92/{{ movie.poster_path }}" >
+                </div>-->
+
+        </div>
+    </div>
+</div>
+
+{% include 'pages/footer.html' %}

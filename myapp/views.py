@@ -12,13 +12,20 @@ def popular(request):
 
 def topRated(request):
     context = {"movies": topRatedMovies()}
-    return render(request, 'pages/popular.html', context)
+    return render(request, 'pages/topRated.html', context)
 
 def byGenre(request):
-    id = request.GET.get("id")
-
-    context = {"id" : id, "movies" : moviesByGenre(id)}
+    identifier = request.GET.get("id")
+    context = {"id" : identifier, "movies" : moviesByGenre(identifier)}
     return render(request, 'pages/genreMovies.html', context)
+
+def movieDetail(request):
+    movieIdentifier = request.GET.get("movieId")
+    context = {"id" : movieIdentifier, "movie" : getMovieDetail(movieIdentifier), "key" : getVideoKey(movieIdentifier)}
+    return render(request, 'pages/movieDetail.html', context)
+
+def actorDetail(request):
+    pass
 
 # Functions
 
@@ -40,3 +47,14 @@ def moviesByGenre(id):
     result = requests.get(url)
     return loads(result.text)["results"]
 
+def getMovieDetail(movieId):
+    key = "9e43f45f94705cc8e1d5a0400d19a7b7"
+    url = f"https://api.themoviedb.org/3/movie/{movieId}?api_key={key}&language=fr-FR"
+    result = requests.get(url)
+    return loads(result.text)
+
+def getVideoKey(movieId):
+    key = "9e43f45f94705cc8e1d5a0400d19a7b7"
+    url = f"https://api.themoviedb.org/3/movie/{movieId}/videos?api_key={key}&language=fr-FR"
+    result = requests.get(url)
+    return loads(result.text)
