@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% include 'pages/header.html' %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-12 row-cols-sm-12 row-cols-md-12 g-5">
+            <div class="d-flex align-items-stretchl mx-auto">
+                {% if actor.profile_path %}
+                    <div class="card shadow-sm my-auto mx-1">
+                       <img src="https://image.tmdb.org/t/p/w500/{{ actor.profile_path }}" height="310" width="210" >
+                    </div>
+                {% else %}
+                    <div style="width: 200px; height: 300px;"><p>Image not found</p></div>
+                {% endif %}
+                    <div>
+                      {% if actor.name %}
+                        <h1>{{actor.name}}</h1>
+                      {% else %}
+                        <h1>title not found</h1>
+                      {% endif %}
+                      {% if actor.biography %}
+                        <p>{{actor.biography}}</p>
+                      {% else %}
+                        <p>description not found</p>
+                      {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div style="overflow-x: auto; max-width: 100%; white-space: nowrap;">
+          <table style="max-width: 100%; table-layout: fixed;">
+            <tr>
+              {% for movie in movies %}
+                {% if movie.poster_path != None %}
+                <th><img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" width="200" height="300" onclick="location.href='movieDetail?movieId={{ movie.id }}'"></th>
+                {% else %}
+                <th><div style="width: 200px; height: 300px;" onclick="location.href='movieDetail?movieId={{ movie.id }}'"><p>Image not found</p></div></th>
+                {% endif %}
+            {% endfor %}
+            </tr>
+
+            <tr>
+              {% for movie in movies %}
+              <td><button style="width: 100%" onclick="location.href='movieDetail?movieId={{ movie.id }}'">{{movie.title}}</button></td>
+              {% endfor %}
+            </tr>
+
+          </table>
+        </div>
+    </div>
+</div>
+
+{% include 'pages/footer.html' %}

@@ -4,13 +4,26 @@
     <div class="container">
         <div class="row row-cols-12 row-cols-sm-12 row-cols-md-12 g-5">
             <div class="d-flex align-items-stretchl mx-auto">
-                <div class="card shadow-sm my-auto mx-1">
-                    <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" >
+              {% if actor.profile_path %}
+                <div class="card shadow-sm my-auto mx-15">
+                  <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" >
                 </div>
-                    <div>
-                        <h1>{{movie.title}}</h1>
-                        <p>{{movie.overview}}</p>
+              {% else %}
+                <div style="width: 200px; height: 300px;"><p>Image not found</p></div>
+              {% endif %}
 
+
+                    <div>
+                      {% if movie.overview %}
+                        <h1>{{movie.title}}</h1>
+                      {% else %}
+                        <h1>title not found</h1>
+                      {% endif %}
+                      {% if movie.overview %}
+                        <p>{{movie.overview}}</p>
+                      {% else %}
+                        <p>description not found</p>
+                      {% endif %}
                 </div>
             </div>
         </div>
@@ -22,17 +35,25 @@
         <div class="row row-cols-12 row-cols-sm-12 row-cols-md-12 g-5">
             <iframe width="672" height="378" src="https://www.youtube.com/embed/{{ key }}" frameborder="0" allowfullscreen></iframe>
         </div>
-        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-12 g-1">
-          <div class="card shadow-sm mx-auto " onclick="">
-            <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" width="200" height="300" >
-            <p>name : laea</p>
-          </div>
+        <div style="overflow-x: auto; max-width: 100%; white-space: nowrap;">
+          <table style="max-width: 100%; table-layout: fixed;">
+            <tr >
+              {% for actor in actors %}
+                {% if actor.profile_path != None %}
+                <th><img src="https://image.tmdb.org/t/p/w500/{{ actor.profile_path }}" width="200" height="300" onclick="location.href='actorDetail?actorId={{ actor.id }}'"></th>
+                {% else %}
+                <th><div style="width: 200px; height: 300px;" onclick="location.href='actorDetail?actorId={{ actor.id }}'"><p>Image not found</p></div></th>
+                {% endif %}
+            {% endfor %}
+            </tr>
 
-          <!--
-          <div class="card shadow-sm my-auto mx-1">
-                    <img src="https://image.tmdb.org/t/p/w92/{{ movie.poster_path }}" >
-                </div>-->
+            <tr>
+              {% for actor in actors %}
+              <td><button style="width: 100%" onclick="location.href='actorDetail?actorId={{ actor.id }}'">{{actor.name}}</button></td>
+              {% endfor %}
+            </tr>
 
+          </table>
         </div>
     </div>
 </div>

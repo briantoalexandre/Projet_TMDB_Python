@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from json import loads
 import requests
 
-# Page
+# Pages
 
 
 def popular(request):
@@ -21,11 +21,13 @@ def byGenre(request):
 
 def movieDetail(request):
     movieIdentifier = request.GET.get("movieId")
-    context = {"id" : movieIdentifier, "movie" : getMovieDetail(movieIdentifier), "key" : getVideoKey(movieIdentifier)}
+    context = {"id" : movieIdentifier, "movie" : getMovieDetail(movieIdentifier), "key" : getVideoKey(movieIdentifier), "actors" : getActors(movieIdentifier)}
     return render(request, 'pages/movieDetail.html', context)
 
 def actorDetail(request):
-    pass
+    actorIdentifier = request.GET.get("actorId")
+    context = {"id": actorIdentifier, "actor": getActorDetail(actorIdentifier), "movies": getMovies(actorIdentifier)}
+    return render(request, 'pages/actorDetail.html', context)
 
 # Functions
 
@@ -58,3 +60,23 @@ def getVideoKey(movieId):
     url = f"https://api.themoviedb.org/3/movie/{movieId}/videos?api_key={key}&language=fr-FR"
     result = requests.get(url)
     return loads(result.text)
+
+def getActors(movieId):
+    key = "9e43f45f94705cc8e1d5a0400d19a7b7"
+    url = f"https://api.themoviedb.org/3/movie/{movieId}/credits?api_key={key}&language=fr-FR"
+    result = requests.get(url)
+    return loads(result.text)["cast"]
+
+def getActorDetail(actorId):
+    key = "9e43f45f94705cc8e1d5a0400d19a7b7"
+    url = f"https://api.themoviedb.org/3/person/{actorId}?api_key={key}&language=fr-FR"
+    result = requests.get(url)
+    return loads(result.text)
+
+def getMovies(actorId):
+    key = "9e43f45f94705cc8e1d5a0400d19a7b7"
+    url = f"https://api.themoviedb.org/3/person/{actorId}/combined_credits?api_key={key}&language=fr-FR"
+    result = requests.get(url)
+    return loads(result.text)["cast"]
+
+
