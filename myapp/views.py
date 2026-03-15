@@ -32,8 +32,8 @@ def actorDetail(request):
 def queryFilms(request):
     query = request.GET.get("query")
     page = request.GET.get("page")
-    func = queryGetList(query, page)
-
+    func = queryGetListMovie(query, page)
+    print(func)
     results = func["results"]
     page = func["page"]
     total_pages = func["total_pages"]
@@ -41,6 +41,19 @@ def queryFilms(request):
     context = {"query" : query, "results" : results, "page" : page, "total_pages" : total_pages, "total" : total}
 
     return render(request, 'pages/queryFilms.html', context)
+
+def queryActors(request):
+    query = request.GET.get("query")
+    page = request.GET.get("page")
+    func = queryGetListActor(query, page)
+
+    results = func["results"]
+    page = func["page"]
+    total_pages = func["total_pages"]
+    total = func["total_results"]
+    context = {"query" : query, "results" : results, "page" : page, "total_pages" : total_pages, "total" : total}
+
+    return render(request, 'pages/queryActors.html', context)
 
 # Functions
 
@@ -92,8 +105,20 @@ def getMovies(actorId):
     result = requests.get(url)
     return loads(result.text)["cast"]
 
-def queryGetList(query, page):
+def queryGetListMovie(query, page):
+    if page == None:
+        page = 1
     key = "9e43f45f94705cc8e1d5a0400d19a7b7"
     url = f"https://api.themoviedb.org/3/search/movie?query={query}&api_key={key}&language=fr-FR&page={page}"
     result = requests.get(url)
     return loads(result.text)
+
+def queryGetListActor(query, page):
+    if page == None:
+        page = 1
+    key = "9e43f45f94705cc8e1d5a0400d19a7b7"
+    url = f"https://api.themoviedb.org/3/search/person?query={query}&api_key={key}&language=fr-FR&page={page}"
+    result = requests.get(url)
+    return loads(result.text)
+
+

@@ -9,4 +9,6 @@ urlpatterns = [
         path('movieDetail', views.movieDetail, name='movieDetail'),
         path('actorDetail', views.actorDetail, name='actorDetail'),
         path('queryFilms', views.queryFilms, name='queryFilms'),
+        path('queryActors', views.queryActors, name='queryActor'),
+
 ]

@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% include 'pages/header.html' %}
+
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+       <h4>Search : {{ page }}/{{total_pages}}</h4>
+    {% if page > 1 %}
+     <button onclick="location.href='queryActors?query={{ query }}&page={{page|add:'-1'}}'">Previous</button>
+    {% else %}
+     <button>-Previous-</button>
+    {% endif %}
+
+    {% if page < total_pages %}
+     <button onclick="location.href='queryActors?query={{ query }}&page={{page|add:'+1'}}'">Next</button>
+    {% else %}
+     <button>-Next-</button>
+    {% endif %}
+     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+     {% for actor in results %}
+        <div class="d-flex align-items-stretchl">
+          <div class="card shadow-sm ">
+            <img src="https://image.tmdb.org/t/p/w780/{{ actor.profile_path }}" >
+            <div class="card-body lh-sm d-flex flex-column">
+              <p class=" lh-sm">
+                <strong>"{{ actor.name }}"</strong>
+              </p>
+             <button type="button" class="btn btn-primary mt-auto" onclick="location.href='actorDetail?actorId={{actor.id}}'">View</button>
+
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if page > 1 %}
+     <button onclick="location.href='queryActors?query={{ query }}&page={{page|add:'-1'}}'">Previous</button>
+    {% else %}
+     <button>-Previous-</button>
+    {% endif %}
+
+    {% if page < total_pages %}
+     <button onclick="location.href='queryActors?query={{ query }}&page={{page|add:'+1'}}'">Next</button>
+    {% else %}
+     <button>-Next-</button>
+    {% endif %}
+  </div>
+</div>
+
+{% include 'pages/footer.html' %}

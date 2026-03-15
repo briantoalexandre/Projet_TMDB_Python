@@ -49,7 +49,11 @@
 
             <tr>
               {% for actor in actors %}
+                {% if movie.name %}
               <td><button style="width: 100%" onclick="location.href='actorDetail?actorId={{ actor.id }}'">{{actor.name}}</button></td>
+                {% else %}
+              <td><button style="width: 100%" onclick="location.href='actorDetail?actorId={{ actor.id }}'">-</button></td>
+                {% endif %}
               {% endfor %}
             </tr>
 
