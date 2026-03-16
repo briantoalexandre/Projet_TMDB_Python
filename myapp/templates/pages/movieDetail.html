@@ -33,7 +33,11 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-12 row-cols-sm-12 row-cols-md-12 g-5">
-            <iframe width="672" height="378" src="https://www.youtube.com/embed/{{ key }}" frameborder="0" allowfullscreen></iframe>
+            {% if key %}
+            <iframe width="672" height="378" src="https://www.youtube-nocookie.com/embed/{{ key.key }}" frameborder="0" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            {% else %}
+            <p>Video not found</p>
+            {% endif %}
         </div>
         <div style="overflow-x: auto; max-width: 100%; white-space: nowrap;">
           <table style="max-width: 100%; table-layout: fixed;">
@@ -49,7 +53,7 @@
 
             <tr>
               {% for actor in actors %}
-                {% if movie.name %}
+                {% if actor.name %}
               <td><button style="width: 100%" onclick="location.href='actorDetail?actorId={{ actor.id }}'">{{actor.name}}</button></td>
                 {% else %}
               <td><button style="width: 100%" onclick="location.href='actorDetail?actorId={{ actor.id }}'">-</button></td>

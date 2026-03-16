@@ -85,7 +85,8 @@ def getVideoKey(movieId):
     key = "9e43f45f94705cc8e1d5a0400d19a7b7"
     url = f"https://api.themoviedb.org/3/movie/{movieId}/videos?api_key={key}&language=fr-FR"
     result = requests.get(url)
-    return loads(result.text)
+    check = loads(result.text)["results"]
+    return check
 
 def getActors(movieId):
     key = "9e43f45f94705cc8e1d5a0400d19a7b7"
@@ -122,3 +123,5 @@ def queryGetListActor(query, page):
     return loads(result.text)
 
 
+t = 943694
+print(getVideoKey(t))
