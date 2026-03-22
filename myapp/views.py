@@ -86,6 +86,8 @@ def getVideoKey(movieId):
     url = f"https://api.themoviedb.org/3/movie/{movieId}/videos?api_key={key}&language=fr-FR"
     result = requests.get(url)
     check = loads(result.text)["results"]
+    if type(check) == list and len(check) != 0:
+        check = check[0]
     return check
 
 def getActors(movieId):
